@@ -7,13 +7,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-import {
-  getFirestore,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-} from "firebase/firestore/lite";
+import { getFirestore } from "firebase/firestore/lite";
 
 import useAuthUser from "src/composables/UseAuthUser";
 
@@ -30,23 +24,22 @@ const firebaseApp = initializeApp(firebaseConfig);
 console.log("firebaseApp", firebaseApp);
 
 // Initialize Firebase Authentication and get a reference to the service
-const auth = getAuth(firebaseApp);
-console.log("firebaseAuth", auth);
+const firebaseAuth = getAuth(firebaseApp);
+//console.log("firebaseAuth", firebaseAuth);
 
 const firebaseDb = getFirestore(firebaseApp);
 console.log(firebaseDb);
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    console.log("firebaseConnection.onAuthStateChanged().user", user);
-  } else {
-    // User is signed out
-    user = null;
-  }
-});
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     console.log("firebaseConnection.onAuthStateChanged().user", user);
+//   } else {
+//     user = null;
+//   }
+// });
+
+export { firebaseDb };
 
 export default function firebase() {
-  return { auth };
+  return { firebaseAuth, firebaseDb };
 }

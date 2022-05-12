@@ -4,7 +4,9 @@
 
     <div v-if="user">
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
-        Hello {{ user.email }}
+        Hello, {{ userDetails.name }}
+        {{ user.email }}
+        {{ user.uid }}
       </div>
     </div>
 
@@ -28,6 +30,7 @@ import { defineComponent } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
+import UserStore from "src/store/UserStore";
 
 export default defineComponent({
   name: "MePage",
@@ -36,16 +39,18 @@ export default defineComponent({
     const { user, logout } = useAuthUser();
     const { notifyError, notifySuccess } = useNotify();
     const router = useRouter();
+    const userDetails = UserStore.state.userDetails;
+    console.log("UserStore.state.userDetails", userDetails);
+
+    console.log("UserStore", UserStore);
 
     const handleLogout = async () => {
       try {
-        console.log("Logging out...", user);
         await logout();
         notifySuccess("Logout Successful");
-        user.value = null;
+        //user.value = null;
         router.push("/");
       } catch (error) {
-        //alert(error.message);
         notifyError(error.message);
       }
     };
@@ -53,6 +58,7 @@ export default defineComponent({
     return {
       user,
       handleLogout,
+      userDetails,
     };
   },
 });

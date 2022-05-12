@@ -129,9 +129,8 @@ export default defineComponent({
 
     const handleRegister = async () => {
       try {
-        console.log("handleRegister: form.value", form.value);
+        //console.log("handleRegister: form.value", form.value);
         await register(form.value.email, form.value.password);
-        console.log("handleRegister: userCredential", user);
         notifySuccess("Registration was Successful");
         router.push("me");
       } catch (error) {
