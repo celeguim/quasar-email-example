@@ -21,32 +21,73 @@ export function handleAuthStateChanged({ commit, dispatch, state }) {
 
   onAuthStateChanged(firebaseAuth, (user) => {
     if (user) {
-      console.log("actions.onAuthStateChanged().state", state.userDetails);
-      console.log("actions.onAuthStateChanged().state", getUserName());
+      if (doc) {
+        //console.log("actions.onAuthStateChanged().getUserName", getUserName());
 
-      const docRef = doc(firebaseDb, "users", user.uid);
-      const docSnap = getDoc(docRef).then(async (doc) => {
-        //      console.log("actions.onAuthStateChanged().docSnap", doc);
-        if (doc) {
-          //console.log("actions.onAuthStateChanged().docSnap.data", doc.data());
-          commit("setUserDetails", {
-            name: doc.data().name,
-            email: user.email,
-            userid: user.uid,
-          });
+        const docRef = doc(firebaseDb, "users", user.uid);
 
-          dispatch("firebaseUpdateUser", { userid: user.uid, online: true });
-        }
-      });
+        // getDoc(docRef).then((doc) => {
+        //   console.log("actions.onAuthStateChanged().getDoc", doc.id);
+        //   commit(setUserDetails, {
+        //     name: doc.id,
+        //     email: doc.id,
+        //     id: doc.id,
+        //   });
+        //   //dispatch("firebaseUpdateUser", { userid: doc.uid, online: true });
+        // });
+
+        console.log("actions.onAuthStateChanged().BeforeGetDoc");
+
+        getDoc(docRef).then((doc) => {
+          if (doc.exists) {
+            console.log("actions.onAuthStateChanged().docSnap", doc);
+
+            const userDetails = doc.data();
+            userDetails.userid = user.uid;
+            console.log(
+              "actions.onAuthStateChanged().userDetails",
+              userDetails
+            );
+
+            commit("setUserDetails", userDetails);
+
+            // commit("setUserDetails", {
+            //   //name: doc.data().name,
+            //   name: "PleaseUpdate",
+            //   email: user.email,
+            //   userid: user.uid,
+            // });
+            // dispatch("firebaseUpdateUser", { userid: user.uid, online: true });
+            dispatch("firebaseUpdateUser", {
+              userid: userDetails.userid,
+              name: userDetails.name,
+              online: true,
+            });
+          } else {
+            console.log(
+              "actions.onAuthStateChanged().userDetails",
+              userDetails
+            );
+            commit("setUserDetails", {});
+          }
+        });
+
+        console.log("actions.onAuthStateChanged().AfterGetDoc");
+      }
     } else {
       console.log("actions.onAuthStateChanged().state", state);
 
-      dispatch("firebaseUpdateUser", {
-        userid: getUserId(),
-        online: false,
-      });
-      // user = null;
-      commit("setUserDetails", {});
+      if (state.userDetails) {
+        dispatch("firebaseUpdateUser", {
+          userid: state.userDetails.userid,
+          online: false,
+        });
+
+        commit("setUserDetails", {
+          userid: state.userDetails.userid,
+          online: false,
+        });
+      }
     }
   });
 }
@@ -58,6 +99,7 @@ export function firebaseUpdateUser({}, payload) {
     const firebaseDb = firebase.firebaseDb;
     updateDoc(doc(firebaseDb, "users/" + payload.userid), {
       online: payload.online,
+      //name: payload.name,
     });
   }
 }

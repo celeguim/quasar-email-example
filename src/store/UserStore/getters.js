@@ -9,11 +9,9 @@ export function getUserName(state) {
 }
 
 export function getUserId(state) {
-  console.log("getters", state);
-  console.log("UserStore.state", UserStore.state.userDetails);
-
+  //console.log("getters", state);
+  //console.log("UserStore.state", UserStore.state.userDetails);
   if (state && state.userDetails) return state.userDetails.userid;
-
   if (UserStore.state.userDetails) return UserStore.state.userDetails.userid;
   //return "dHrhRoALBbQJYUgInwOueHZD81A2";
 }

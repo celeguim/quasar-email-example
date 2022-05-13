@@ -22,6 +22,6 @@ export default store(function (/* { ssrContext } */) {
     strict: process.env.DEBUGGING,
   });
 
-  console.log("index.js.Store", Store);
+  //console.log("index.js.Store", Store);
   return Store;
 });

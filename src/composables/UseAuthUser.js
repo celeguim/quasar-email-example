@@ -24,23 +24,12 @@ const user = ref(null);
 export default function useAuthUser() {
   const firebase = useFirebase();
 
-  const login = async (email, password) => {
+  const login = async (email, password) =>
     //console.log("useAuthUser().login", email, password);
+    await signInWithEmailAndPassword(firebase.firebaseAuth, email, password);
 
-    const userCredential = await signInWithEmailAndPassword(
-      firebase.firebaseAuth,
-      email,
-      password
-    );
-
-    const user = userCredential.user;
-    //console.log("useAuthUser().login", user);
-
-    return user;
-  };
-
-  const register = async (email, password) => {
-    //console.log("register", email, password);
+  const register = async (name, email, password) => {
+    console.log("register", name, email, password);
 
     const userCredential = await createUserWithEmailAndPassword(
       firebase.firebaseAuth,
@@ -48,15 +37,11 @@ export default function useAuthUser() {
       password
     );
 
-    const user = userCredential.user;
-    //console.log("useAuthUser().register", user);
+    await setDoc(doc(firebase.firebaseDb, "users", userCredential.user.uid), {
+      name: name,
+    });
 
-    // await setDoc(doc(firebase.firebaseDb, "users", user.uid), {
-    //   name: "Los Angeles",
-    //   state: "CA",
-    //   country: "USA",
-    // });
-
+    user.value = login(email, password);
     return user;
   };
 
@@ -67,9 +52,9 @@ export default function useAuthUser() {
   };
 
   const logout = async () => {
-    //console.log("useAuthUser().logout:before", user.value);
+    console.log("useAuthUser().logout:before", user.value);
     user.value = await signOut(firebase.firebaseAuth);
-    //console.log("useAuthUser().logout:after", user.value);
+    console.log("useAuthUser().logout:after", user.value);
   };
 
   const isLoggedIn = () => {

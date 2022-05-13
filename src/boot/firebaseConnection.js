@@ -11,24 +11,25 @@ import { getFirestore } from "firebase/firestore/lite";
 
 import useAuthUser from "src/composables/UseAuthUser";
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDY7HVOvsFcLkwHhxRG88p69M13rKGNuTI",
-  authDomain: "multi-lang-chat-project.firebaseapp.com",
-  projectId: "multi-lang-chat-project",
-  storageBucket: "multi-lang-chat-project.appspot.com",
-  messagingSenderId: "131256732681",
-  appId: "1:131256732681:web:21b421c7f0b8dc8c44bcd8",
+  apiKey: "AIzaSyDsW4lYMIAFMRGn-vFyOpPyPqi-b1KBLgw",
+  authDomain: "quasar-email-example.firebaseapp.com",
+  projectId: "quasar-email-example",
+  storageBucket: "quasar-email-example.appspot.com",
+  messagingSenderId: "486024966262",
+  appId: "1:486024966262:web:732875c68f8683c3bc2f57",
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-console.log("firebaseApp", firebaseApp);
+//console.log("firebaseApp", firebaseApp);
 
 // Initialize Firebase Authentication and get a reference to the service
 const firebaseAuth = getAuth(firebaseApp);
 //console.log("firebaseAuth", firebaseAuth);
 
 const firebaseDb = getFirestore(firebaseApp);
-console.log(firebaseDb);
+//console.log(firebaseDb);
 
 // onAuthStateChanged(auth, (user) => {
 //   if (user) {

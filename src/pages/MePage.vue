@@ -4,7 +4,7 @@
 
     <div v-if="user">
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
-        Hello, {{ userDetails.name }}
+        Hello,
         {{ user.email }}
         {{ user.uid }}
       </div>
@@ -30,7 +30,6 @@ import { defineComponent } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
-import UserStore from "src/store/UserStore";
 
 export default defineComponent({
   name: "MePage",
@@ -39,10 +38,6 @@ export default defineComponent({
     const { user, logout } = useAuthUser();
     const { notifyError, notifySuccess } = useNotify();
     const router = useRouter();
-    const userDetails = UserStore.state.userDetails;
-    console.log("UserStore.state.userDetails", userDetails);
-
-    console.log("UserStore", UserStore);
 
     const handleLogout = async () => {
       try {
@@ -58,7 +53,6 @@ export default defineComponent({
     return {
       user,
       handleLogout,
-      userDetails,
     };
   },
 });

@@ -105,8 +105,8 @@ export default defineComponent({
     return {
       email: null,
       isPwd: true,
-      password: null,
-      passwordMatch: null,
+      password: "123456",
+      passwordMatch: "123456",
     };
   },
 
@@ -130,7 +130,7 @@ export default defineComponent({
     const handleRegister = async () => {
       try {
         //console.log("handleRegister: form.value", form.value);
-        await register(form.value.email, form.value.password);
+        await register("New User", form.value.email, form.value.password);
         notifySuccess("Registration was Successful");
         router.push("me");
       } catch (error) {
