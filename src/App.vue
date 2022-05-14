@@ -3,12 +3,29 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { useUsersStore } from "stores/users";
+import { mapActions } from "pinia";
 
 export default {
-  methods: {
-    ...mapActions("UserStore", ["handleAuthStateChanged"]),
+  setup() {
+    const store = useUsersStore();
+
+    // onMounted(() => {
+    //   console.log("mounted", this.$store);
+    //   //this.$store.dispatch("handleAuthStateChanged");
+    //   //this.store.dispatch("handleAuthStateChanged");
+    // });
+
+    return {
+      // you can return the whole store instance to use it in the template
+      store,
+    };
   },
+
+  methods: {
+    ...mapActions(useUsersStore, ["handleAuthStateChanged"]),
+  },
+
   mounted() {
     this.handleAuthStateChanged();
   },

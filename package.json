@@ -16,9 +16,9 @@
     "firebase": "^9.8.0",
     "quasar": "^2.6.0",
     "stylus-loader": "^6.2.0",
+    "pinia": "^2.0.14",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0",
-    "vuex": "^4.0.2"
+    "vue-router": "^4.0.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",

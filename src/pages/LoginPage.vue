@@ -83,8 +83,6 @@ import { defineComponent, ref, onMounted } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import { useRouter } from "vue-router";
 import useNotify from "src/composables/UseNotify";
-import { mapActions } from "vuex";
-import { useState } from "vue";
 
 export default defineComponent({
   name: "LoginPage",
@@ -117,9 +115,9 @@ export default defineComponent({
 
     const handleLogin = async () => {
       try {
-        //console.log("handleLogin: form.value", form.value);
+        console.log("handleLogin: form.value", form.value);
         user.value = await login(form.value.email, form.value.password);
-        //console.log("handleLogin: user", user);
+        console.log("handleLogin: user", user);
         notifySuccess("Login Successful");
         router.push("me");
       } catch (error) {
